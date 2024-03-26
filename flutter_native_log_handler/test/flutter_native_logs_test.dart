@@ -15,6 +15,14 @@ class MockFlutterNativeLogsPlatform
 }
 
 void main() {
+  const String testDate = '03-26';
+  const String testTime = '10:26:54.970';
+  const int testProcessId = 20521;
+  const int testThreadId = 20684;
+  const String testLevel = 'D';
+  const String testTag = 'flutter';
+  const String testMessage = 'some message';
+
   final FlutterNativeLogsPlatform initialPlatform =
       FlutterNativeLogsPlatform.instance;
 
@@ -32,13 +40,6 @@ void main() {
   });
 
   test('parseAndroidMessage works as expected', () {
-    const String testDate = '03-26';
-    const String testTime = '10:26:54.970';
-    const int testProcessId = 20521;
-    const int testThreadId = 20684;
-    const String testLevel = 'D';
-    const String testTag = 'flutter';
-    const String testMessage = 'some message';
     expect(
       FlutterNativeLogs.parseAndroidMessage(
         message:
@@ -71,10 +72,6 @@ void main() {
   });
 
   group('parses levels for android correctly', () {
-    const String testTag = 'test';
-    const String testMessage = 'test message';
-    const int testProcessId = 1234;
-
     final Map<String, NativeLogMessageLevel> testCases = {
       'D': NativeLogMessageLevel.debug,
       'E': NativeLogMessageLevel.error,
@@ -88,7 +85,8 @@ void main() {
       test('parses $level correctly', () {
         expect(
           FlutterNativeLogs.parseAndroidMessage(
-            message: '$level/$testTag($testProcessId): $testMessage',
+            message:
+                '$testDate $testTime $testProcessId $testThreadId $level $testTag: $testMessage',
           ).level,
           equals(expected),
         );
